@@ -78,20 +78,6 @@
       </div>
       </div>
     </form>
-
-
-
-    <!--<form @submit.prevent="createProject">
-      <div>
-        <label for="title">Title:</label>
-        <input type="text" id="title" v-model="title" required />
-      </div>
-      <div>
-        <label for="description">Description:</label>
-        <textarea id="description" v-model="description" required></textarea>
-      </div>
-      <button type="submit">Create Project</button>
-    </form>-->
   </div>
 </template>
 
@@ -116,10 +102,6 @@ export default {
       newTech: "",
       successMessage: "",
     };
-    // return {
-    //   title: "",
-    //   description: "",
-    // };
   },
   methods: {
     nextStep() {
@@ -157,13 +139,6 @@ export default {
           userId: userId,
         };
 
-      // // Prepare the project data to be sent to the server
-      // const projectData = {
-      //   title: this.title,
-      //   description: this.description,
-      //   userId: userId,
-      // };
-
       // Send the project data to the server to create a new project
       try {
         const response = await fetch("http://localhost:3000/api/project", {
@@ -182,10 +157,6 @@ export default {
           console.log("Project created successfully:", data);
           // Redirect to a different page or perform additional actions
           // For example, you can use Vue Router to navigate to the project details page
-
-          //const project = await response.json();
-          //this.$router.push({ name: "detail", params: { id: project._id } });
-
           this.$router.push(`/${data._id}`);
         } else {
           // Project creation failed, display error message to the user
@@ -248,132 +219,3 @@ export default {
   },
 };
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <template>
-  <div>
-    <h1>Create Project</h1>
-    <form @submit.prevent="createProject">
-      <div>
-        <label for="title">Title:</label>
-        <input type="text" id="title" v-model="title" required />
-      </div>
-      <div>
-        <label for="description">Description:</label>
-        <textarea id="description" v-model="description" required></textarea>
-      </div>
-      <button type="submit">Create Project</button>
-    </form>
-  </div>
-</template>
-
-<script>
-
-export default {
-  data() {
-    return {
-      title: "",
-      description: "",
-    };
-  },
-  methods: {
-    async createProject() {
-      // Perform form validation
-      if (!this.title || !this.description) {
-        alert("Please fill in all fields");
-        return;
-      }
-
-      // Get the logged-in user ID from the token or your authentication mechanism
-      const userId = this.getLoggedInUserId(); // Replace this with your implementation
-
-      // Prepare the project data to be sent to the server
-      const projectData = {
-        title: this.title,
-        description: this.description,
-        userId: userId,
-      };
-
-      // Send the project data to the server to create a new project
-      try {
-        const response = await fetch("http://localhost:3000/api/project", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(projectData),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          // Project creation successful
-          console.log("Project created successfully:", data);
-          // Redirect to a different page or perform additional actions
-          // For example, you can use Vue Router to navigate to the project details page
-          this.$router.push(`/project/${data._id}`);
-        } else {
-          // Project creation failed, display error message to the user
-          console.error("Failed to create project:", data.error);
-          alert("Failed to create project. Please try again.");
-        }
-      } catch (error) {
-        // Handle network or server errors
-        console.error("Error:", error);
-        alert(
-          "An error occurred while creating the project. Please try again."
-        );
-      }
-    },
-    getLoggedInUserId() {
-      // Implement the logic to retrieve the logged-in user ID
-      // from the token or your authentication mechanism
-      const token = localStorage.getItem("token");
-      if (!token) {
-        // Handle the case when the token is not available
-        return null;
-      }
-
-      // Split the token by '.' to extract the payload
-      const tokenParts = token.split(".");
-      if (tokenParts.length !== 3) {
-        // Handle the case when the token is invalid
-        console.error("Invalid token format");
-        return null;
-      }
-
-      // Decode the payload from base64
-      const payload = atob(tokenParts[1]);
-
-      try {
-        // Parse the payload as JSON to access the user ID
-        const { userId } = JSON.parse(payload);
-        return userId;
-      } catch (error) {
-        console.error("Failed to parse token payload:", error);
-        // Handle the case when the payload cannot be parsed
-        return null;
-      }
-    },
-  },
-};
-</script> -->

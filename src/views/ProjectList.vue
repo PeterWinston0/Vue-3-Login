@@ -2,9 +2,19 @@
   <div>
     <h2>Projects:</h2>
     <ul>
-      <li v-for="project in projects" :key="project._id">
+      <div v-for="project in projects" :key="project._id">
         <router-link :to="`/${project._id}`">{{ project.title }}</router-link>
-      </li>
+        <p>End Date: {{ project.end_date }}</p>
+          <p>Status: {{ getProjectStatus(project.end_date) }}</p>
+          <div class="mt-auto">
+            <button
+              @click="deleteProject(project._id)"
+              class="px-4 py-2 bg-red-500 text-white rounded"
+            >
+              Delete
+            </button>
+          </div>
+      </div>
     </ul>
   </div>
 </template>
@@ -47,6 +57,42 @@ export default {
       } catch (error) {
         // Handle network or server errors
         console.error('Error retrieving projects:', error);
+      }
+    },
+    deleteProject(projectId) {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      fetch(`http://localhost:3000/api/project/${projectId}`, {
+        method: "DELETE",
+        headers: headers,
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Project deleted successfully!");
+            this.projects = this.projects.filter(
+              (project) => project._id !== projectId
+            );
+          } else {
+            console.error("Failed to delete project.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error deleting project:", error);
+        });
+    },
+
+    getProjectStatus(endDate) {
+      const today = new Date();
+      const projectEndDate = new Date(endDate);
+
+      if (projectEndDate < today) {
+        return "Overdue";
+      } else {
+        return "Ongoing";
       }
     },
   },

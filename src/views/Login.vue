@@ -14,6 +14,10 @@
       </div>
       <button type="submit">Login</button>
     </form>
+    <p class="text-center mt-4">
+        Don't have an account?
+        <router-link to="/registration" class="text-blue-500 hover:underline">Register</router-link>
+      </p>
   </div>
 </template>
 

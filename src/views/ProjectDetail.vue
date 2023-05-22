@@ -1,10 +1,6 @@
 <template>
   <div>
-    
     <h2 class="text-2xl font-bold mb-4">{{ title }}</h2>
-
-    <!--<button @click="redirectToProjectSettings">Go to Project Settings</button>-->
-
     <div class="kanban-board">
       <div class="column" v-for="column in columns" :key="column.id">
         <h3>{{ column.title }}</h3>
@@ -77,7 +73,6 @@ import { useRouter } from "vue-router";
 import Sortable from "sortablejs";
 import ProjectSettings from "./ProjectSettings.vue";
 
-
 export default {
   components: {
     ProjectSettings,
@@ -110,10 +105,10 @@ export default {
     this.fetchProject();
   },
   methods: {
-    redirectToProjectSettings() {
-      const projectId = this.$route.params.id; // Assuming the project ID is part of the route parameters
-      this.$router.push(`/${projectId}/settings`); // Replace with the actual path to your ProjectSettings route
-    },
+    // redirectToProjectSettings() {
+    //   const projectId = this.$route.params.id; 
+    //   this.$router.push(`/${projectId}/settings`);
+    // },
     async fetchProject() {
       try {
         const projectId = this.$route.params.id;
@@ -172,8 +167,6 @@ export default {
       const newTaskId = Date.now().toString(); // Generate unique ID based on current timestamp
       const newTask = {
         id: newTaskId,
-        //title: `Task ${newTaskId}`,
-        //description: `Description ${newTaskId}`,
         title: `Title`,
         description: `Description`,
         editableTitle: false,
