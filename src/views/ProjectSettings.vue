@@ -1,0 +1,108 @@
+<template>
+    <div class="p-4">
+      <h2 class="text-2xl font-bold mb-4">Project Settings</h2>
+  
+      <label for="title" class="block mb-2">Title:</label>
+      <input type="text" id="title" v-model="title" class="border border-gray-300 rounded p-2 mb-4 w-full" />
+  
+      <label for="description" class="block mb-2">Description:</label>
+      <textarea id="description" v-model="description" class="border border-gray-300 rounded p-2 mb-4 w-full"></textarea>
+  
+      <label for="dropbox" class="block mb-2">Dropbox:</label>
+      <input type="text" id="dropbox" v-model="dropbox" class="border border-gray-300 rounded p-2 mb-4 w-full" />
+  
+      <label for="github" class="block mb-2">GitHub:</label>
+      <input type="text" id="github" v-model="github" class="border border-gray-300 rounded p-2 mb-4 w-full" />
+  
+      <h3 class="text-lg font-semibold mb-2">Technologies:</h3>
+      <ul>
+        <li v-for="(tech, index) in techs" :key="index" class="flex items-center mb-2">
+          <span class="mr-2">{{ tech.name }}</span>
+          <button type="button" @click="removeTech(index)" class="px-2 py-1 bg-red-500 text-white rounded">Remove</button>
+        </li>
+      </ul>
+  
+      <div class="flex items-center mb-4">
+        <input type="text" v-model="newTechnology" placeholder="Add new technology" class="border border-gray-300 rounded p-2 mr-2" />
+        <button type="button" @click="addTech" class="px-4 py-2 bg-blue-500 text-white rounded">Add Technology</button>
+      </div>
+  
+      <button @click="saveProjectSettings" class="px-4 py-2 bg-green-500 text-white rounded mr-2">Save</button>
+      <button @click="cancelProjectSettings" class="px-4 py-2 bg-gray-500 text-white rounded">Cancel</button>
+    </div>
+  </template>
+  
+  
+  <script>
+  export default {
+    data() {
+      return {
+        title: "",
+        description: "",
+        dropbox: "",
+        github: "",
+        techs: [],
+        newTechnology: "",
+      };
+    },
+  
+    async mounted() {
+      try {
+        const projectId = this.$route.params.id;
+        const response = await fetch(
+          `http://localhost:3000/api/project/${projectId}`
+        );
+        const data = await response.json();
+        this.title = data.title;
+        this.description = data.description;
+        this.dropbox = data.dropbox;
+        this.github = data.github;
+        this.techs = data.techs;
+      } catch (error) {
+        console.error("Error fetching project:", error);
+      }
+    },
+  
+    methods: {
+      addTech() {
+        if (this.newTechnology.trim() !== "") {
+          this.techs.push({ name: this.newTechnology.trim() });
+          this.newTechnology = ""; // Clear the input field
+        }
+      },
+  
+      removeTech(index) {
+        this.techs.splice(index, 1);
+      },
+  
+      async saveProjectSettings() {
+        try {
+          const projectId = this.$route.params.id;
+          const payload = {
+            title: this.title,
+            description: this.description,
+            dropbox: this.dropbox,
+            github: this.github,
+            techs: this.techs,
+          };
+          await fetch(`http://localhost:3000/api/project/${projectId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+          console.log('Project settings saved successfully.');
+        } catch (error) {
+          console.error('Error saving project settings:', error);
+        }
+      },
+  
+      cancelProjectSettings() {
+        this.$router.go(-1); // Navigates back to the previous page
+        console.log("Project settings editing cancelled.");
+      },
+    },
+  };
+  </script>
+  

@@ -183,10 +183,10 @@ export default {
           // Redirect to a different page or perform additional actions
           // For example, you can use Vue Router to navigate to the project details page
 
-      //  ---->  // const project = await response.json();
-          // this.$router.push({ name: "detail", params: { id: project._id } });
+          //const project = await response.json();
+          //this.$router.push({ name: "detail", params: { id: project._id } });
 
-          this.$router.push(`/project/${data._id}`);
+          this.$router.push(`/${data._id}`);
         } else {
           // Project creation failed, display error message to the user
           console.error("Failed to create project:", data.error);
