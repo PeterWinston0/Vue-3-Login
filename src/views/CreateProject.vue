@@ -1,8 +1,132 @@
 <template>
+  <div class="container">
+    <h1 class="mb-4">Create Project</h1>
+    <form @submit.prevent="createProject">
+      <!-- Step 1 -->
+      <div v-if="currentStep === 1">
+        <div class="mb-4">
+          <label for="title" class="text-lg font-medium">Title:</label>
+          <input
+            type="text"
+            id="title"
+            v-model="newProject.title"
+            required
+            class="form-control mt-2"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="description" class="text-lg font-medium">Description:</label>
+          <textarea
+            id="description"
+            v-model="newProject.description"
+            required
+            class="form-control mt-2"
+          ></textarea>
+        </div>
+        <div class="mb-4">
+          <label for="start_date" class="text-lg font-medium">Start Date:</label>
+          <datepicker
+            v-model="newProject.start_date"
+            required
+            class="form-control mt-2"
+          ></datepicker>
+        </div>
+        <div class="mb-4">
+          <label for="end_date" class="text-lg font-medium">End Date:</label>
+          <datepicker
+            v-model="newProject.end_date"
+            required
+            class="form-control mt-2"
+          ></datepicker>
+        </div>
+        <button
+          type="button"
+          @click="nextStep"
+          class="btn btn-primary mt-4"
+        >
+          Next
+        </button>
+      </div>
+      <!-- Step 2 -->
+      <div v-else-if="currentStep === 2">
+        <div class="mb-4">
+          <label for="dropbox" class="text-lg font-medium">Dropbox:</label>
+          <input
+            type="text"
+            id="dropbox"
+            v-model="newProject.dropbox"
+            required
+            class="form-control mt-2"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="github" class="text-lg font-medium">Github:</label>
+          <input
+            type="text"
+            id="github"
+            v-model="newProject.github"
+            required
+            class="form-control mt-2"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="tech" class="text-lg font-medium">Tech:</label>
+          <input
+            type="text"
+            id="tech"
+            v-model="newTech"
+            class="form-control mt-2"
+          />
+          <button
+            type="button"
+            @click="addTech"
+            class="btn btn-primary mt-2"
+          >
+            Add
+          </button>
+        </div>
+        <ul class="mb-4">
+          <li
+            v-for="(tech, index) in newProject.techs"
+            :key="index"
+            class="d-flex justify-content-between"
+          >
+            <span>{{ tech.name }}</span>
+            <button
+              type="button"
+              @click="removeTech(index)"
+              class="btn btn-danger"
+            >
+              Remove
+            </button>
+          </li>
+        </ul>
+        <div class="d-flex justify-content-between">
+          <button
+            type="button"
+            @click="prevStep"
+            class="btn btn-secondary"
+          >
+            Previous
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Create
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>
+
+
+<!-- <template>
   <div>
     <h1>Create Project</h1>
     <form @submit.prevent="createProject">
-      <!-- Step 1 -->
+      
       <div v-if="currentStep === 1">
         <div class="my-4">
           <label for="title" class="text-lg font-medium">Title:</label>
@@ -51,7 +175,7 @@
           Next
         </button>
       </div>
-      <!-- Step 2 -->
+      
       <div v-else-if="currentStep === 2">
         <div>
         <label for="dropbox" class="text-lg font-medium">Dropbox:</label>
@@ -79,7 +203,7 @@
       </div>
     </form>
   </div>
-</template>
+</template> -->
 
 <script>
 import Datepicker from "vue3-datepicker";

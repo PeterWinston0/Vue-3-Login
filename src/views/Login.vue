@@ -1,6 +1,115 @@
-<!-- Login.vue -->
-
 <template>
+  <div class="login-page">
+    <h1>Login</h1>
+    <form @submit.prevent="login" class="login-form">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" v-model="password" required />
+      </div>
+      <button type="submit" class="btn-login">Login</button>
+    </form>
+    <p class="text-center mt-4">
+      Don't have an account?
+      <router-link to="/registration" class="text-blue-500 hover:underline">Register</router-link>
+    </p>
+  </div>
+</template>
+
+<style scoped>
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.login-form {
+  width: 90%;
+  max-width: 400px;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #555;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.btn-login {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #0056b3;
+}
+
+.text-center {
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1.5rem;
+  color: #555;
+}
+
+.text-blue-500 {
+  color: #007bff;
+}
+
+.hover\:underline:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .login-form {
+    width: 100%;
+    padding: 1.5rem;
+  }
+}
+</style>
+
+
+
+
+<!-- <template>
   <div>
     <h1>Login</h1>
     <form @submit.prevent="login">
@@ -19,7 +128,7 @@
         <router-link to="/registration" class="text-blue-500 hover:underline">Register</router-link>
       </p>
   </div>
-</template>
+</template> -->
 
 <script>
 export default {
