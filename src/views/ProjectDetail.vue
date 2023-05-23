@@ -1,6 +1,9 @@
 <template>
   <div>
     <h2 class="text-2xl font-bold mb-4">{{ title }}</h2>
+    <div v-if="successMessage" class="success-message alert alert-success mt-4">
+      {{ successMessage }}
+    </div>
     <div class="kanban-board">
       <div class="column" v-for="column in columns" :key="column.id">
         <h3>{{ column.title }}</h3>
@@ -14,6 +17,7 @@
                 type="text"
                 v-model="task.editableTaskTitle"
                 :disabled="!task.editableTitle"
+                class="form-control"
                 @input="
                   updateTaskTitle(column.id, task.id, task.editableTaskTitle)
                 "
@@ -29,6 +33,7 @@
               <textarea
                 v-model="task.editableTaskDescription"
                 :disabled="!task.editableDescription"
+                class="form-control"
                 @input="
                   updateTaskDescription(
                     column.id,
@@ -42,27 +47,31 @@
             <button
               v-if="column.id > 1"
               @click="moveTask(task.id, column.id - 1)"
+              class="btn btn-sm btn-secondary float-right"
             >
               ←
             </button>
             <button
               v-if="column.id < columns.length"
               @click="moveTask(task.id, column.id + 1)"
+              class="btn btn-sm btn-secondary float-right"
             >
               →
             </button>
-            <button @click="deleteTask(column.id, task.id)">Delete</button>
+
+            <button
+              @click="deleteTask(column.id, task.id)"
+              class="btn btn-danger"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <button @click="addTask">Add Task</button>
-    <button @click="saveKanbanBoard">Save</button>
-    <div v-if="successMessage" class="success-message">
-      {{ successMessage }}
-    </div>
+    <button @click="addTask" class="btn btn-primary">Add Task</button>
+    <button @click="saveKanbanBoard" class="btn btn-success">Save</button>
 
-    <!-- Project Settings -->
     <project-settings :projectId="projectId" />
   </div>
 </template>
@@ -76,7 +85,6 @@ import ProjectSettings from "./ProjectSettings.vue";
 export default {
   components: {
     ProjectSettings,
-    
   },
   data() {
     return {
@@ -105,10 +113,6 @@ export default {
     this.fetchProject();
   },
   methods: {
-    // redirectToProjectSettings() {
-    //   const projectId = this.$route.params.id; 
-    //   this.$router.push(`/${projectId}/settings`);
-    // },
     async fetchProject() {
       try {
         const projectId = this.$route.params.id;
@@ -250,7 +254,7 @@ export default {
     },
   },
 };
-</script>
+</script> 
 
 <style scoped>
 .kanban-board {
@@ -319,4 +323,3 @@ export default {
   }
 }
 </style>
-

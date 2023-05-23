@@ -1,8 +1,8 @@
 <template>
-    <div>
-      <button @click="logout">Logout</button>
-    </div>
-  </template>
+  <div>
+    <button @click="logout" class="btn btn-primary">Logout</button>
+  </div>
+</template>
   
   <script>
   export default {

@@ -106,30 +106,6 @@ input[type="password"] {
 }
 </style>
 
-
-
-
-<!-- <template>
-  <div>
-    <h1>Login</h1>
-    <form @submit.prevent="login">
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required />
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required />
-      </div>
-      <button type="submit">Login</button>
-    </form>
-    <p class="text-center mt-4">
-        Don't have an account?
-        <router-link to="/registration" class="text-blue-500 hover:underline">Register</router-link>
-      </p>
-  </div>
-</template> -->
-
 <script>
 export default {
   data() {
@@ -167,10 +143,9 @@ export default {
         if (response.ok) {
           // Login successful
           console.log('Login successful:', data.data.token);
-          // Save the token to localStorage or Vuex store for future requests
+          // Save the token to localStorage
           localStorage.setItem('token', data.data.token);
-          // Redirect to a different page or perform additional actions
-          // For example, you can use Vue Router to navigate to the dashboard page
+
           this.$router.push('/dashboard');
         } else {
           // Login failed, display error message to the user

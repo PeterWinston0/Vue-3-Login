@@ -3,6 +3,8 @@ import Login from '../views/Login.vue';
 import Dashboard from '../views/Dashboard.vue';
 import ProjectList from '../views/ProjectList.vue';
 import CreateProject from '../views/CreateProject.vue';
+import ProjectDetail from "../views/ProjectDetail.vue";
+import ProjectSettings from "../views/ProjectSettings.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
