@@ -18,7 +18,9 @@
     </form>
     <p class="text-center mt-4">
       Already have an account?
-      <router-link to="/login" class="text-blue-500 hover:underline">Login</router-link>
+      <router-link to="/login" class="text-blue-500 hover:underline"
+        >Login</router-link
+      >
     </p>
 
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -88,63 +90,6 @@ export default {
   },
 };
 </script>
-
-<!-- <script>
-export default {
-  data() {
-    return {
-      name: "",
-      email: "",
-      password: "",
-    };
-  },
-  methods: {
-    async register(event) {
-      event.preventDefault();
-
-      // Perform form validation
-      if (!this.name || !this.email || !this.password) {
-        alert("Please fill in all fields");
-        return;
-      }
-
-      // Send registration request to server
-      try {
-        const response = await fetch(
-          "http://localhost:3000/api/user/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: this.name,
-              email: this.email,
-              password: this.password,
-            }),
-          }
-        );
-
-        const data = await response.json();
-
-        // Check for successful registration
-        if (response.ok) {
-          this.successMessage = "Registration successful";
-          // Redirect to a different page or perform additional actions
-          // For example, you can use Vue Router to navigate to the login page
-          this.$router.push("/login");
-        } else {
-          // Display error message if registration failed
-          this.errorMessage = data.error;
-        }
-      } catch (error) {
-        console.error(error);
-        this.errorMessage = "An error occurred while registering";
-      }
-    },
-  },
-};
-</script> -->
 
 <style scoped>
 .registration-page {

@@ -4,9 +4,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-// Add the following lines
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.css';
+import './assets/custom.css';
 
 const app = createApp(App)
 

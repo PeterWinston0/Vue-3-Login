@@ -1,7 +1,7 @@
 <template>
   <div class="container p-4">
+    <h4 class="text-lg font-semibold mb-2">Welcome {{ userName }}</h4>
     <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
-    <p>Welcome {{ userName }}</p>
     <ProjectList />
   </div>
 </template>

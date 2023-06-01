@@ -3,43 +3,26 @@
     <h2>Projects:</h2>
     <ul class="list-group">
       <li v-for="project in projects" :key="project._id" class="list-group-item">
-        <router-link :to="`/${project._id}`" class="text-decoration-none">{{ project.title }}</router-link>
-        <p>End Date: {{ project.end_date }}</p>
-        <p>Status: {{ getProjectStatus(project.end_date) }}</p>
-        <div class="mt-auto">
-          <button
-            @click="deleteProject(project._id)"
-            class="btn btn-danger text-white rounded"
-          >
-            Delete
-          </button>
+        <div class="row align-items-center">
+          <div class="col-sm-5">
+            <router-link :to="`/${project._id}`" class="text-decoration-none">{{ project.title }}</router-link>
+          </div>
+          <div class="col-sm-3">
+            <p class="mb-0">End Date: {{ project.end_date }}</p>
+          </div>
+          <div class="col-sm-2">
+            <p class="mb-0">Status: {{ getProjectStatus(project.end_date) }}</p>
+          </div>
+          <div class="col-sm-2 d-flex justify-content-end">
+            <button @click="deleteProject(project._id)" class="btn btn-danger text-white rounded">
+              Delete
+            </button>
+          </div>
         </div>
       </li>
     </ul>
   </div>
 </template>
-
-
-<!-- <template>
-  <div>
-    <h2>Projects:</h2>
-    <ul>
-      <div v-for="project in projects" :key="project._id">
-        <router-link :to="`/${project._id}`">{{ project.title }}</router-link>
-        <p>End Date: {{ project.end_date }}</p>
-          <p>Status: {{ getProjectStatus(project.end_date) }}</p>
-          <div class="mt-auto">
-            <button
-              @click="deleteProject(project._id)"
-              class="px-4 py-2 bg-red-500 text-white rounded"
-            >
-              Delete
-            </button>
-          </div>
-      </div>
-    </ul>
-  </div>
-</template> -->
 
 <script>
 export default {

@@ -4,6 +4,23 @@
     <div v-if="successMessage" class="success-message alert alert-success mt-4">
       {{ successMessage }}
     </div>
+    <div class="mt-4">
+      <button
+        class="btn btn-dark"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#projectSettings"
+        aria-expanded="false"
+        aria-controls="projectSettings"
+      >
+        Project Settings
+      </button>
+      <div class="collapse" id="projectSettings">
+        <div class="card card-body">
+          <project-settings :projectId="projectId" />
+        </div>
+      </div>
+    </div>
     <div class="kanban-board">
       <div class="column" v-for="column in columns" :key="column.id">
         <h3>{{ column.title }}</h3>
@@ -18,51 +35,30 @@
                 v-model="task.editableTaskTitle"
                 :disabled="!task.editableTitle"
                 class="form-control"
-                @input="
-                  updateTaskTitle(column.id, task.id, task.editableTaskTitle)
-                "
+                @input="updateTaskTitle(column.id, task.id, task.editableTaskTitle)"
                 @blur="task.editableTitle = false"
               />
             </div>
             <div v-if="!task.editableDescription">
-              <span @click="task.editableDescription = true">{{
-                task.description
-              }}</span>
+              <span @click="task.editableDescription = true">{{ task.description }}</span>
             </div>
             <div v-else>
               <textarea
                 v-model="task.editableTaskDescription"
                 :disabled="!task.editableDescription"
                 class="form-control"
-                @input="
-                  updateTaskDescription(
-                    column.id,
-                    task.id,
-                    task.editableTaskDescription
-                  )
-                "
+                @input="updateTaskDescription(column.id, task.id, task.editableTaskDescription)"
                 @blur="task.editableDescription = false"
               ></textarea>
             </div>
-            <button
-              v-if="column.id > 1"
-              @click="moveTask(task.id, column.id - 1)"
-              class="btn btn-sm btn-secondary float-right"
-            >
+            <button v-if="column.id > 1" @click="moveTask(task.id, column.id - 1)" class="btn btn-sm btn-secondary">
               ←
             </button>
-            <button
-              v-if="column.id < columns.length"
-              @click="moveTask(task.id, column.id + 1)"
-              class="btn btn-sm btn-secondary float-right"
-            >
+            <button v-if="column.id < columns.length" @click="moveTask(task.id, column.id + 1)" class="btn btn-sm btn-secondary">
               →
             </button>
 
-            <button
-              @click="deleteTask(column.id, task.id)"
-              class="btn btn-danger"
-            >
+            <button @click="deleteTask(column.id, task.id)" class="btn btn-danger">
               Delete
             </button>
           </div>
@@ -71,8 +67,6 @@
     </div>
     <button @click="addTask" class="btn btn-primary">Add Task</button>
     <button @click="saveKanbanBoard" class="btn btn-success">Save</button>
-
-    <project-settings :projectId="projectId" />
   </div>
 </template>
 

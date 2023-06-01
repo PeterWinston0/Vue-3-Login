@@ -14,10 +14,70 @@
     </form>
     <p class="text-center mt-4">
       Don't have an account?
-      <router-link to="/registration" class="text-blue-500 hover:underline">Register</router-link>
+      <router-link to="/registration" class="text-blue-500 hover:underline"
+        >Register</router-link
+      >
     </p>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    async login() {
+      // Perform form validation
+      if (!this.email || !this.password) {
+        alert("Please fill in all fields");
+        return;
+      }
+
+      // Prepare the login data to be sent to the server
+      const loginData = {
+        email: this.email,
+        password: this.password,
+      };
+
+      // Send the login data to the server
+      try {
+        const response = await fetch("http://localhost:3000/api/user/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginData),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Login successful
+          console.log("Login successful:", data.data.token);
+          // Save the token to localStorage
+          localStorage.setItem("token", data.data.token);
+
+          this.$router.push("/dashboard");
+        } else {
+          // Login failed, display error message to the user
+          console.error("Failed to login:", data.error);
+          alert(
+            "Failed to login. Please check your credentials and try again."
+          );
+        }
+      } catch (error) {
+        // Handle network or server errors
+        console.error("Error during login:", error);
+        alert("An error occurred during login. Please try again.");
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 .login-page {
@@ -105,59 +165,3 @@ input[type="password"] {
   }
 }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-    };
-  },
-  methods: {
-    async login() {
-      // Perform form validation
-      if (!this.email || !this.password) {
-        alert('Please fill in all fields');
-        return;
-      }
-
-      // Prepare the login data to be sent to the server
-      const loginData = {
-        email: this.email,
-        password: this.password,
-      };
-
-      // Send the login data to the server
-      try {
-        const response = await fetch('http://localhost:3000/api/user/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(loginData),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          // Login successful
-          console.log('Login successful:', data.data.token);
-          // Save the token to localStorage
-          localStorage.setItem('token', data.data.token);
-
-          this.$router.push('/dashboard');
-        } else {
-          // Login failed, display error message to the user
-          console.error('Failed to login:', data.error);
-          alert('Failed to login. Please check your credentials and try again.');
-        }
-      } catch (error) {
-        // Handle network or server errors
-        console.error('Error during login:', error);
-        alert('An error occurred during login. Please try again.');
-      }
-    },
-  },
-};
-</script>
